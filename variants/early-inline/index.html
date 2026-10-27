@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>杨炜晨 · 早期内联主页主题演示</title>
+<meta name="description" content="杨炜晨，电气工程及自动化专业学生，热爱 AIGC 与 AI 工具。此页为早期视觉主题演示，技能与作品卡为样式示例。">
+<meta property="og:title" content="杨炜晨 · 电气 × AIGC">
+<meta property="og:description" content="电气工程专业 × AIGC 玩家，早期主页主题演示，含明确标注的示例内容。">
+<meta property="og:type" content="website">
+<!-- 关键 CSS 全部内联：无渲染阻塞外部请求，LCP 友好 -->
+<style>
+  :root{
+    --bg:#05060f; --bg-2:#0a0c1c;
+    --card:rgba(255,255,255,.04); --card-border:rgba(255,255,255,.08);
+    --text:#e8eaf6; --text-dim:#9aa0b5;
+    --a1:#7c4dff; --a2:#00e5ff; --a3:#ff3da6;
+    --grad:linear-gradient(135deg,#7c4dff,#00e5ff);
+    --grad-hot:linear-gradient(135deg,#ff3da6,#7c4dff);
+    --radius:18px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:"Segoe UI","PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+    line-height:1.7;overflow-x:hidden;
+  }
+  ::selection{background:rgba(124,77,255,.4)}
+  /* 背景光晕：transform 动画避免 layout 触发 CLS */
+  .glow{position:fixed;border-radius:50%;filter:blur(120px);opacity:.35;pointer-events:none;z-index:0;will-change:transform}
+  .glow-1{width:480px;height:480px;top:-160px;left:-120px;background:#7c4dff;animation:float 14s ease-in-out infinite}
+  .glow-2{width:420px;height:420px;top:35%;right:-160px;background:#00e5ff;animation:float 18s ease-in-out infinite reverse}
+  .glow-3{width:380px;height:380px;bottom:-140px;left:30%;background:#ff3da6;animation:float 16s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(40px) scale(1.08)}}
+
+  /* 导航 */
+  header{position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;padding:18px 6vw;
+    backdrop-filter:blur(14px);background:rgba(5,6,15,.55);
+    border-bottom:1px solid transparent;transition:border-color .3s}
+  header.scrolled{border-bottom-color:var(--card-border)}
+  .logo{font-weight:800;font-size:1.25rem;letter-spacing:.5px;background:var(--grad);
+    -webkit-background-clip:text;background-clip:text;color:transparent;text-decoration:none}
+  .logo span{color:var(--text)}
+  nav ul{display:flex;gap:32px;list-style:none}
+  nav a{color:var(--text-dim);text-decoration:none;font-size:.92rem;transition:color .25s;position:relative}
+  nav a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:2px;border-radius:2px;background:var(--grad);transition:width .3s}
+  nav a:hover{color:var(--text)} nav a:hover::after{width:100%}
+  .nav-toggle{display:none;background:none;border:none;cursor:pointer;width:36px;height:36px;position:relative;z-index:110}
+  .nav-toggle span{display:block;width:24px;height:2px;margin:5px auto;background:var(--text);transition:.3s;border-radius:2px}
+  .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .nav-toggle.open span:nth-child(2){opacity:0}
+  .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  @media(max-width:768px){
+    nav ul{position:fixed;top:0;right:-100%;height:100vh;width:70%;flex-direction:column;
+      justify-content:center;align-items:center;gap:28px;background:rgba(8,10,25,.95);
+      backdrop-filter:blur(20px);transition:right .4s cubic-bezier(.77,0,.18,1);border-left:1px solid var(--card-border)}
+    nav ul.open{right:0}
+    .nav-toggle{display:block}
+  }
+
+  main{position:relative;z-index:1}
+  section{padding:110px 6vw;max-width:1200px;margin:0 auto}
+
+  /* Hero（LCP 元素：h1 文本，无需网络资源，天然快） */
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:140px 6vw 80px}
+  .hero-inner{max-width:860px;margin:0 auto;text-align:center}
+  .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:999px;
+    border:1px solid var(--card-border);background:var(--card);font-size:.85rem;color:var(--text-dim);margin-bottom:28px}
+  .badge .dot{width:8px;height:8px;border-radius:50%;background:#00e676;box-shadow:0 0 10px #00e676;animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  h1{font-size:clamp(2.6rem,7vw,4.6rem);font-weight:900;line-height:1.15;letter-spacing:1px;margin-bottom:20px}
+  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .grad-text-hot{background:var(--grad-hot);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .typing{font-size:clamp(1.1rem,2.6vw,1.5rem);color:var(--text-dim);min-height:2em;margin-bottom:36px;font-weight:300}
+  .typing .cursor{display:inline-block;width:2px;height:1.2em;background:var(--a2);vertical-align:middle;margin-left:4px;animation:blink .8s step-end infinite}
+  @keyframes blink{50%{opacity:0}}
+  .hero-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:60px}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:999px;
+    font-size:.95rem;font-weight:600;text-decoration:none;transition:transform .25s,box-shadow .25s;cursor:pointer;border:none}
+  .btn-primary{background:var(--grad);color:#fff;box-shadow:0 8px 30px rgba(124,77,255,.35)}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(124,77,255,.5)}
+  .btn-ghost{background:transparent;color:var(--text);border:1px solid var(--card-border)}
+  .btn-ghost:hover{transform:translateY(-3px);border-color:var(--a2);box-shadow:0 8px 30px rgba(0,229,255,.15)}
+  .hero-stats{display:flex;justify-content:center;gap:clamp(30px,8vw,90px);flex-wrap:wrap}
+  .stat{text-align:center}
+  .stat .num{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;background:var(--grad);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat .label{font-size:.85rem;color:var(--text-dim);margin-top:2px}
+  .scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);color:var(--text-dim);
+    font-size:.8rem;letter-spacing:2px;display:flex;flex-direction:column;align-items:center;gap:8px}
+  .scroll-hint .mouse{width:24px;height:38px;border:2px solid var(--text-dim);border-radius:12px;position:relative}
+  .scroll-hint .mouse::after{content:"";position:absolute;top:6px;left:50%;transform:translateX(-50%);
+    width:4px;height:8px;border-radius:4px;background:var(--a2);animation:wheel 1.6s infinite}
+  @keyframes wheel{0%{opacity:1;top:6px}100%{opacity:0;top:20px}}
+
+  /* 区块标题 */
+  .sec-head{text-align:center;margin-bottom:60px}
+  .sec-tag{display:inline-block;font-size:.8rem;letter-spacing:3px;color:var(--a2);text-transform:uppercase;margin-bottom:12px}
+  .sec-head h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800}
+
+  /* 关于 */
+  .about-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:50px;align-items:center}
+  @media(max-width:860px){.about-grid{grid-template-columns:1fr}}
+  .avatar-wrap{position:relative;width:280px;height:280px;margin:0 auto}
+  .avatar-ring{position:absolute;inset:0;border-radius:50%;
+    background:conic-gradient(from 0deg,#7c4dff,#00e5ff,#ff3da6,#7c4dff);
+    animation:spin 8s linear infinite;filter:blur(2px);opacity:.8}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .avatar{position:absolute;inset:8px;border-radius:50%;background:var(--bg-2);
+    display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .avatar .bolt{font-size:7rem;font-weight:900;background:var(--grad-hot);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .about-text p{color:var(--text-dim);margin-bottom:16px}
+  .about-text strong{color:var(--text)}
+  .info-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+  .chip{padding:8px 16px;border-radius:999px;font-size:.83rem;border:1px solid var(--card-border);
+    background:var(--card);color:var(--text);transition:.25s}
+  .chip:hover{border-color:var(--a1);transform:translateY(-2px)}
+
+  /* 技能（卡片 aspect-ratio 预留，hover 仅 transform 防 CLS） */
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px}
+  .skill-card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);
+    padding:28px;backdrop-filter:blur(10px);transition:transform .3s,border-color .3s;position:relative;overflow:hidden}
+  .skill-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad);opacity:0;transition:opacity .3s}
+  .skill-card:hover{transform:translateY(-6px);border-color:rgba(124,77,255,.4)}
+  .skill-card:hover::before{opacity:1}
+  .skill-card h3{font-size:1.1rem;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+  .skill-card .sub{font-size:.82rem;color:var(--text-dim);margin-bottom:20px}
+  .bar{margin-bottom:14px}
+  .bar-top{display:flex;justify-content:space-between;font-size:.85rem;margin-bottom:6px}
+  .bar-top .name{color:var(--text)} .bar-top .pct{color:var(--a2);font-weight:600}
+  .bar-track{height:8px;border-radius:4px;background:rgba(255,255,255,.06);overflow:hidden}
+  .bar-fill{height:100%;width:0;border-radius:4px;background:var(--grad);transition:width 1.4s cubic-bezier(.22,1,.36,1)}
+  .tag-cloud{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .tag{font-size:.78rem;padding:5px 12px;border-radius:999px;background:rgba(124,77,255,.12);
+    border:1px solid rgba(124,77,255,.25);color:#cbb8ff}
+  .tag.cyan{background:rgba(0,229,255,.1);border-color:rgba(0,229,255,.25);color:#a8ecff}
+  .tag.pink{background:rgba(255,61,166,.1);border-color:rgba(255,61,166,.25);color:#ffc0e0}
+
+  /* 作品（卡片固定 aspect-ratio 预留空间，CLS=0） */
+  .works-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+  .work-card{position:relative;border-radius:var(--radius);overflow:hidden;cursor:pointer;
+    aspect-ratio:4/3;border:1px solid var(--card-border);transition:transform .4s,box-shadow .4s;background:var(--bg-2)}
+  .work-card:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 20px 60px rgba(124,77,255,.25)}
+  .work-visual{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:transform .5s}
+  .work-card:hover .work-visual{transform:scale(1.06)}
+  .wv-neon{background:radial-gradient(circle at 30% 30%,#7c4dff66,transparent 55%),radial-gradient(circle at 70% 70%,#00e5ff55,transparent 55%),#0a0c1c}
+  .wv-neon svg{width:45%;height:45%;filter:drop-shadow(0 0 18px rgba(124,77,255,.8))}
+  .wv-grid{background:linear-gradient(transparent 49%,rgba(0,229,255,.12) 50%,transparent 51%),linear-gradient(90deg,transparent 49%,rgba(0,229,255,.12) 50%,transparent 51%),radial-gradient(circle at center,rgba(255,61,166,.25),transparent 65%),#0a0c1c;background-size:46px 46px,46px 46px,100% 100%,100%}
+  .wv-grid svg{width:42%;height:42%;color:var(--a2);filter:drop-shadow(0 0 14px rgba(0,229,255,.7))}
+  .wv-waves{background:linear-gradient(180deg,#05060f,#1a0b3a,#05060f)}
+  .wv-waves svg{width:100%;height:60%;color:rgba(124,77,255,.5)}
+  .wv-rings{background:#0a0c1c;overflow:hidden}
+  .wv-rings::before,.wv-rings::after{content:"";position:absolute;border-radius:50%;border:2px solid rgba(0,229,255,.35);animation:ring 6s linear infinite}
+  .wv-rings::before{width:120px;height:120px}
+  .wv-rings::after{width:200px;height:200px;animation-delay:3s;border-color:rgba(124,77,255,.4)}
+  @keyframes ring{from{transform:scale(.4);opacity:0}50%{opacity:.8}to{transform:scale(1.6);opacity:0}}
+  .wv-aurora{background:linear-gradient(120deg,#0a0c1c,#3d1a6e,#0a3a4a,#0a0c1c);background-size:300% 300%;animation:aurora 10s ease infinite}
+  @keyframes aurora{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+  .wv-aurora svg{width:40%;height:40%;color:rgba(0,229,255,.6);filter:drop-shadow(0 0 20px rgba(0,229,255,.5))}
+  .wv-matrix{background:#020309;position:relative}
+  .wv-matrix svg{width:48%;height:48%;color:#00e676;filter:drop-shadow(0 0 12px rgba(0,230,118,.6))}
+  .work-info{position:absolute;left:0;right:0;bottom:0;padding:16px;background:linear-gradient(transparent,rgba(0,0,0,.75))}
+  .work-info h3{font-size:1rem;margin-bottom:2px}
+  .work-info p{font-size:.8rem;color:var(--text-dim)}
+  .work-cat{position:absolute;top:14px;left:14px;font-size:.72rem;padding:4px 10px;border-radius:999px;
+    background:rgba(5,6,15,.6);border:1px solid var(--card-border);backdrop-filter:blur(6px);color:var(--text-dim)}
+
+  /* 联系 */
+  .contact-card{max-width:640px;margin:0 auto;text-align:center;padding:56px 40px;border-radius:24px;
+    background:var(--card);border:1px solid var(--card-border);backdrop-filter:blur(10px)}
+  .contact-card h3{font-size:1.6rem;margin-bottom:14px}
+  .contact-card p{color:var(--text-dim);margin-bottom:32px}
+  .contact-links{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .contact-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:12px;
+    border:1px solid var(--card-border);background:rgba(255,255,255,.03);color:var(--text);
+    text-decoration:none;font-size:.9rem;transition:.25s}
+  .contact-btn:hover{border-color:var(--a1);transform:translateY(-3px)}
+
+  footer{padding:40px 6vw 50px;text-align:center;color:var(--text-dim);font-size:.85rem;
+    border-top:1px solid var(--card-border);position:relative;z-index:1}
+  footer a{color:var(--a2);text-decoration:none}
+
+  /* 滚动渐入：transform/opacity 动画不触发 CLS */
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  /* 无障碍：尊重 reduced-motion 偏好 */
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+    html{scroll-behavior:auto}
+  }
+
+.archive-notice{font-size:12px;line-height:1.6;padding:12px 16px;margin-bottom:20px;border:1px solid #66519b;border-radius:14px;color:#e0d6ff;background:#1d153b}
+</style>
+</head>
+<body>
+<div class="glow glow-1" aria-hidden="true"></div>
+<div class="glow glow-2" aria-hidden="true"></div>
+<div class="glow glow-3" aria-hidden="true"></div>
+
+<header id="top">
+  <a href="#top" class="logo" aria-label="回到顶部">杨炜晨<span>.dev</span></a>
+  <button class="nav-toggle" aria-label="打开菜单" aria-expanded="false" aria-controls="menu">
+    <span></span><span></span><span></span>
+  </button>
+  <nav aria-label="主导航">
+    <ul id="menu">
+      <li><a href="#about">关于</a></li>
+      <li><a href="#skills">技能</a></li>
+      <li><a href="#works">作品</a></li>
+      <li><a href="#contact">联系</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero" aria-label="首页介绍">
+    <div class="hero-inner"><p class="archive-notice">历史主题演示 · 仅姓名和专业为已核信息；作品、技能进度与计数为样式示例，不当作真人履历。</p>
+      <span class="badge"><span class="dot" aria-hidden="true"></span>电气工程 × AIGC 玩家 · 欢迎光临</span>
+      <h1>你好，我是<br><span class="grad-text">杨炜晨</span> <span class="grad-text-hot">Web Demo</span></h1>
+      <p class="typing"><span id="typed"></span><span class="cursor" aria-hidden="true"></span></p>
+      <div class="hero-cta">
+        <a href="#works" class="btn btn-primary">看看视觉示例 ↓</a>
+        <a href="#contact" class="btn btn-ghost">联系我</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="num" data-count="3">0</div><div class="label">计数样式示例 A</div></div>
+        <div class="stat"><div class="num" data-count="50">0</div><div class="label">计数样式示例 B</div></div>
+        <div class="stat"><div class="num" data-count="200">0</div><div class="label">计数样式示例 C</div></div>
+      </div>
+    </div>
+    <div class="scroll-hint" aria-hidden="true"><div class="mouse"></div>向下滚动</div>
+  </section>
+
+  <!-- 关于 -->
+  <section id="about" aria-label="关于我">
+    <div class="sec-head reveal">
+      <span class="sec-tag">About</span>
+      <h2>关于 <span class="grad-text">我</span></h2>
+    </div>
+    <div class="about-grid">
+      <div class="avatar-wrap reveal" aria-hidden="true">
+        <div class="avatar-ring"></div>
+        <div class="avatar"><span class="bolt">⚡</span></div>
+      </div>
+      <div class="about-text reveal">
+        <p>一个<strong>电气工程及自动化</strong>专业的在校大学生，同时是个重度 <strong>AIGC 玩家</strong>。</p>
+        <p>下面的技能卡、进度条和作品标题都是此历史主题的界面示例，不代表作者的已完成作品、能力评分或实际经历。</p>
+        <p>这是一套早期视觉实验；当前核实项目与个人介绍请查看维护版主页。</p>
+        <div class="info-chips">
+          <span class="chip">⚡ 电气工程</span>
+          <span class="chip">🎨 AIGC 创作</span>
+          <span class="chip">🤖 提示词工程</span>
+          <span class="chip">📊 数据分析</span>
+          <span class="chip">📚 效率工具</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 技能 -->
+  <section id="skills" aria-label="技能">
+    <div class="sec-head reveal">
+      <span class="sec-tag">Skills</span>
+      <h2>示例 <span class="grad-text">技能卡</span></h2>
+    </div>
+    <div class="skills-grid">
+      <article class="skill-card reveal">
+        <h3>⚡ 电气工程</h3>
+        <p class="sub">专业基础与核心方向</p>
+        <div class="bar"><div class="bar-top"><span class="name">电路分析 / 模电数电</span><span class="pct" data-pct="85">0%</span></div><div class="bar-track"><div class="bar-fill" data-w="85"></div></div></div>
+        <div class="bar"><div class="bar-top"><span class="name">PLC 编程与自动化</span><span class="pct" data-pct="70">0%</span></div><div class="bar-track"><div class="bar-fill" data-w="70"></div></div></div>
+        <div class="bar"><div class="bar-top"><span class="name">电力系统分析</span><span class="pct" data-pct="65">0%</span></div><div class="bar-track"><div class="bar-fill" data-w="65"></div></div></div>
+        <div class="tag-cloud"><span class="tag">MATLAB</span><span class="tag">Multisim</span><span class="tag">CAD</span><span class="tag">Keil</span></div>
+      </article>
+      <article class="skill-card reveal">
+        <h3>🎨 AIGC 创作</h3>
+        <p class="sub">用 AI 放大创造力</p>
+        <div class="bar"><div class="bar-top"><span class="name">AI 绘画（SD / MJ）</span><span class="pct" data-pct="90">0%</span></div><div class="bar-track"><div class="bar-fill" data-w="90"></div></div></div>
+        <div class="bar"><div class="bar-top"><span class="name">AI 视频生成</span><span class="pct" data-pct="80">0%</span></div><div class="bar-track"><div class="bar-fill" data-w="80"></div></div></div>
+        <div class="bar"><div class="bar-top"><span class="name">提示词工程</span><span class="pct" data-pct="88">0%</span></div><div class="bar-track"><div class="bar-fill" data-w="88"></div></div></div>
+        <div class="tag-cloud"><span class="tag cyan">Stable Diffusion</span><span class="tag cyan">Midjourney</span><span class="tag cyan">ComfyUI</span><span class="tag cyan">Sora</span></div>
+      </article>
+      <article class="skill-card reveal">
+        <h3>🤖 AI 效率工作流</h3>
+        <p class="sub">让重复劳动自动化</p>
+        <div class="bar"><div class="bar-top"><span class="name">文档 / 表格自动化</span><span class="pct" data-pct="85">0%</span></div><div class="bar-track"><div class="bar-fill" data-w="85"></div></div></div>
+        <div class="bar"><div class="bar-top"><span class="name">知识库搭建</span><span class="pct" data-pct="78">0%</span></div><div class="bar-track"><div class="bar-fill" data-w="78"></div></div></div>
+        <div class="bar"><div class="bar-top"><span class="name">爬虫与信息整理</span><span class="pct" data-pct="72">0%</span></div><div class="bar-track"><div class="bar-fill" data-w="72"></div></div></div>
+        <div class="tag-cloud"><span class="tag pink">Python</span><span class="tag pink">Notion</span><span class="tag pink">Zapier</span><span class="tag pink">Copilot</span></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 作品 -->
+  <section id="works" aria-label="作品集">
+    <div class="sec-head reveal">
+      <span class="sec-tag">Works</span>
+      <h2>视觉 <span class="grad-text-hot">示例</span></h2>
+    </div>
+    <div class="works-grid">
+      <article class="work-card reveal" tabindex="0" aria-label="视觉占位示例：霓虹电路">
+        <span class="work-cat">AI 绘画</span>
+        <div class="work-visual wv-neon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+        </div>
+        <div class="work-info"><h3>示例 · 霓虹电路</h3><p>CSS视觉占位，不代表已交付项目</p></div>
+      </article>
+      <article class="work-card reveal" tabindex="0" aria-label="视觉占位示例：数据星河">
+        <span class="work-cat">数据分析</span>
+        <div class="work-visual wv-grid" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>
+        </div>
+        <div class="work-info"><h3>示例 · 数据星河</h3><p>CSS视觉占位，不代表已交付项目</p></div>
+      </article>
+      <article class="work-card reveal" tabindex="0" aria-label="视觉占位示例：声波粒子">
+        <span class="work-cat">AI 视频</span>
+        <div class="work-visual wv-waves" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 12c2-4 4-4 6 0s4 4 6 0 4-4 6 0v4H2v-4z"/></svg>
+        </div>
+        <div class="work-info"><h3>示例 · 声波粒子</h3><p>CSS视觉占位，不代表已交付项目</p></div>
+      </article>
+      <article class="work-card reveal" tabindex="0" aria-label="视觉占位示例：磁场涟漪">
+        <span class="work-cat">创意编程</span>
+        <div class="work-visual wv-rings" aria-hidden="true"></div>
+        <div class="work-info"><h3>示例 · 磁场涟漪</h3><p>CSS视觉占位，不代表已交付项目</p></div>
+      </article>
+      <article class="work-card reveal" tabindex="0" aria-label="视觉占位示例：极光引擎">
+        <span class="work-cat">AIGC 合成</span>
+        <div class="work-visual wv-aurora" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18"/><path d="M12 7a5 5 0 0 1 0 10"/></svg>
+        </div>
+        <div class="work-info"><h3>示例 · 极光引擎</h3><p>CSS视觉占位，不代表已交付项目</p></div>
+      </article>
+      <article class="work-card reveal" tabindex="0" aria-label="视觉占位示例：矩阵学习笔记">
+        <span class="work-cat">知识库</span>
+        <div class="work-visual wv-matrix" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19V5M10 19V5M16 19V5M22 19V5"/><path d="M2 12h4M8 12h4M14 12h4M20 12h4"/></svg>
+        </div>
+        <div class="work-info"><h3>示例 · 矩阵学习笔记</h3><p>CSS视觉占位，不代表已交付项目</p></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 联系 -->
+  <section id="contact" aria-label="联系我">
+    <div class="sec-head reveal">
+      <span class="sec-tag">Contact</span>
+      <h2>一起 <span class="grad-text">折腾</span> 点什么？</h2>
+    </div>
+    <div class="contact-card reveal">
+      <h3>查看已核实的项目与主页</h3>
+      <p>此页不提供私人联系方式；请通过公开项目导航查看当前成果。</p>
+      <div class="contact-links"><a class="contact-btn" href="https://github.com/yangwei251003" target="_blank" rel="noopener noreferrer">GitHub 项目导航</a><a class="contact-btn" href="https://yangwei251003.github.io/personal-portfolio-lite/" target="_blank" rel="noopener noreferrer">当前维护主页</a></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>© 2026 杨炜晨 · 用 <a href="#top">⚡ 电</a> 与 <a href="#works">🎨 想象</a> 构建 · 历史视觉主题 · 性能记录仅为本地实验</p>
+</footer>
+
+<!-- 自包含脚本位于body末尾；不把内联defer当作性能保证。 -->
+<script>
+(() => {
+  "use strict";
+  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const $ = (s, c = document) => c.querySelector(s);
+  const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+
+  /* 打字机 */
+  const phrases = ["电气工程的理性", "AIGC 的浪漫", "用 AI 放大每一次创造"];
+  let pi = 0, ci = 0, deleting = false;
+  const el = $("#typed");
+  if (el && reducedMotion) el.textContent = phrases[0];
+  if (el && !reducedMotion) {
+    (function type() {
+      const cur = phrases[pi];
+      el.textContent = deleting ? cur.slice(0, ci--) : cur.slice(0, ++ci);
+      let d = deleting ? 45 : 90;
+      if (!deleting && ci === cur.length) { d = 1600; deleting = true; }
+      else if (deleting && ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; d = 400; }
+      setTimeout(type, d);
+    })();
+  }
+
+  /* 导航：滚动加边框 + 移动端菜单 */
+  const header = $("header");
+  const toggle = $(".nav-toggle");
+  const menu = $("#menu");
+  const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 10);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+  if (toggle && menu) {
+    toggle.addEventListener("click", () => {
+      const open = menu.classList.toggle("open");
+      toggle.classList.toggle("open", open);
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "关闭菜单" : "打开菜单");
+    });
+    $$("a", menu).forEach(a => a.addEventListener("click", () => {
+      menu.classList.remove("open"); toggle.classList.remove("open");
+      toggle.setAttribute("aria-expanded", "false"); toggle.setAttribute("aria-label", "打开菜单");
+    }));
+  }
+
+  /* 滚动渐入 + 技能条 + 数字统计 */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add("visible");
+      $$(".bar-fill", e.target).forEach(f => f.style.width = f.dataset.w + "%");
+      $$(".pct", e.target).forEach(p => p.textContent = p.dataset.pct + "%");
+      $$("[data-count]", e.target).forEach(n => {
+        const target = +n.dataset.count, t0 = performance.now(), dur = 1200;
+        const step = (t) => {
+          const k = Math.min(1, (t - t0) / dur), ease = 1 - Math.pow(1 - k, 3);
+          n.textContent = Math.round(target * ease);
+          if (k < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      });
+      io.unobserve(e.target);
+    });
+  }, { threshold: 0.15 });
+  $$(".reveal, .hero-inner").forEach(el => io.observe(el));
+
+  if (reducedMotion) return;
+  /* 背景粒子（Canvas视觉实验；不声称带来标准性能指标改善） */
+  const canvas = document.createElement("canvas");
+  canvas.style.cssText = "position:fixed;inset:0;z-index:0;pointer-events:none";
+  canvas.setAttribute("aria-hidden", "true");
+  document.body.prepend(canvas);
+  const ctx = canvas.getContext("2d");
+  let W, H, pts = [];
+  const init = () => {
+    W = canvas.width = innerWidth; H = canvas.height = innerHeight;
+    pts = Array.from({ length: Math.min(45, Math.floor(W / 32)) }, () => ({
+      x: Math.random() * W, y: Math.random() * H,
+      vx: (Math.random() - .5) * .5, vy: (Math.random() - .5) * .5,
+      r: Math.random() * 1.6 + .6
+    }));
+  };
+  init();
+  let rafId = null;
+  const draw = (now) => {
+    ctx.clearRect(0, 0, W, H);
+    for (const p of pts) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > W) p.vx *= -1;
+      if (p.y < 0 || p.y > H) p.vy *= -1;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, 7);
+      ctx.fillStyle = "rgba(124,77,255,.55)";
+      ctx.fill();
+    }
+    for (let i = 0; i < pts.length; i++) {
+      for (let j = i + 1; j < pts.length; j++) {
+        const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+        const d2 = dx * dx + dy * dy;
+        if (d2 < 130 * 130) {
+          ctx.beginPath();
+          ctx.moveTo(pts[i].x, pts[i].y);
+          ctx.lineTo(pts[j].x, pts[j].y);
+          ctx.strokeStyle = "rgba(0,229,255," + (0.16 * (1 - d2 / 16900)) + ")";
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      }
+    }
+    rafId = requestAnimationFrame(draw);
+  };
+  /* 空闲时启动粒子；后台标签页暂停，不作性能成绩保证。 */
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden && rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    else if (!document.hidden && !rafId) rafId = requestAnimationFrame(draw);
+  });
+  const startIdle = () => { rafId = requestAnimationFrame(draw); };
+  if ("requestIdleCallback" in window) requestIdleCallback(startIdle, { timeout: 900 });
+  else setTimeout(startIdle, 900);
+  window.addEventListener("resize", () => { init(); }, { passive: true });
+})();
+</script>
+</body>
+</html>

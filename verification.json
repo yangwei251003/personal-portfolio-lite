@@ -1,0 +1,66 @@
+{
+  "checks": [
+    {
+      "mode": "http-desktop",
+      "width": 1440,
+      "validNameAndEducation": true,
+      "images": 2,
+      "projectLinks": 4,
+      "noDummyContact": true,
+      "internalAnchorsValid": true,
+      "horizontalOverflow": false,
+      "scriptErrors": [],
+      "httpFailures": [],
+      "externalRequests": []
+    },
+    {
+      "mode": "http-mobile",
+      "width": 390,
+      "validNameAndEducation": true,
+      "images": 2,
+      "projectLinks": 4,
+      "noDummyContact": true,
+      "internalAnchorsValid": true,
+      "horizontalOverflow": false,
+      "scriptErrors": [],
+      "httpFailures": [],
+      "externalRequests": []
+    },
+    {
+      "mode": "file-desktop",
+      "width": 1440,
+      "validNameAndEducation": true,
+      "images": 2,
+      "projectLinks": 4,
+      "noDummyContact": true,
+      "internalAnchorsValid": true,
+      "horizontalOverflow": false,
+      "scriptErrors": [],
+      "httpFailures": [],
+      "externalRequests": []
+    },
+    {
+      "mode": "reduced-motion-mobile",
+      "width": 390,
+      "validNameAndEducation": true,
+      "images": 2,
+      "projectLinks": 4,
+      "noDummyContact": true,
+      "internalAnchorsValid": true,
+      "horizontalOverflow": false,
+      "scriptErrors": [],
+      "httpFailures": [],
+      "externalRequests": []
+    }
+  ],
+  "remotePagesVerified": false,
+  "privacy": {
+    "textAndHtmlDecodedFindings": 0,
+    "imageMetadataFindings": 0,
+    "gpsPresent": false,
+    "originalImageHashesMatch": true,
+    "aigcLabelsRetained": true,
+    "realEmailOrPhonePresent": false
+  },
+  "status": "PASS"
+}

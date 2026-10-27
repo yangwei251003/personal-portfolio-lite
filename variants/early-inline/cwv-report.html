@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>历史实验观测说明（未核验旧数值） · 杨炜晨.dev</title>
+<style>
+  :root{--bg:#05060f;--card:rgba(255,255,255,.04);--card-border:rgba(255,255,255,.08);
+    --text:#e8eaf6;--text-dim:#9aa0b5;--a1:#7c4dff;--a2:#00e5ff;--a3:#ff3da6;
+    --grad:linear-gradient(135deg,#7c4dff,#00e5ff);--good:#00e676;--warn:#ffc107;--bad:#ff5252;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);
+    font-family:"Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+    line-height:1.7;padding:60px 6vw;}
+  .wrap{max-width:960px;margin:0 auto}
+  h1{font-size:clamp(2rem,5vw,3rem);font-weight:900;margin-bottom:12px;
+    background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{color:var(--text-dim);margin-bottom:40px;font-size:.95rem}
+  .badge{display:inline-block;padding:4px 12px;border-radius:999px;font-size:.75rem;
+    background:rgba(0,230,118,.15);border:1px solid rgba(0,230,118,.3);color:var(--good);margin-right:8px}
+  h2{font-size:1.4rem;margin:50px 0 20px;padding-bottom:8px;border-bottom:1px solid var(--card-border);
+    display:flex;align-items:center;gap:10px}
+  h2 .num{font-size:.9rem;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800}
+  h3{font-size:1.1rem;margin:24px 0 12px;color:var(--a2)}
+  p{color:var(--text-dim);margin-bottom:12px}
+  code{background:rgba(124,77,255,.12);padding:2px 8px;border-radius:4px;font-size:.85em;
+    color:#cbb8ff;font-family:ui-monospace,Consolas,monospace}
+  pre{background:rgba(0,0,0,.3);border:1px solid var(--card-border);border-radius:8px;
+    padding:14px 16px;overflow-x:auto;margin:12px 0;font-size:.85em;line-height:1.6}
+  pre code{background:none;padding:0;color:var(--text)}
+  table{width:100%;border-collapse:collapse;margin:20px 0;font-size:.92rem}
+  th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--card-border)}
+  th{color:var(--a2);font-weight:600;font-size:.85rem;text-transform:uppercase;letter-spacing:1px}
+  td{color:var(--text-dim)}
+  td.metric{color:var(--text);font-weight:600}
+  td.good{color:var(--good);font-weight:600}
+  td.warn{color:var(--warn);font-weight:600}
+  .verdict{display:inline-block;padding:3px 10px;border-radius:6px;font-size:.8rem;font-weight:600}
+  .v-good{background:rgba(0,230,118,.15);color:var(--good);border:1px solid rgba(0,230,118,.3)}
+  .v-warn{background:rgba(255,193,7,.15);color:var(--warn);border:1px solid rgba(255,193,7,.3)}
+  .card{background:var(--card);border:1px solid var(--card-border);border-radius:14px;
+    padding:24px;margin:20px 0;backdrop-filter:blur(8px)}
+  .flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin:20px 0}
+  .flow div{background:var(--card);border:1px solid var(--card-border);border-radius:10px;
+    padding:16px;text-align:center;font-size:.85rem;color:var(--text-dim)}
+  .flow div b{display:block;color:var(--a2);font-size:.95rem;margin-bottom:4px}
+  .checklist{list-style:none;padding:0}
+  .checklist li{padding:8px 0 8px 30px;position:relative;color:var(--text-dim)}
+  .checklist li::before{content:"✓";position:absolute;left:0;top:8px;
+    width:22px;height:22px;border-radius:50%;background:rgba(0,230,118,.15);
+    color:var(--good);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem}
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
+  .compare .side{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px}
+  .compare .side h4{font-size:.85rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+  .compare .big{font-size:2.2rem;font-weight:800;margin-bottom:6px}
+  .compare .big.good{color:var(--good)} .compare .big.warn{color:var(--warn)} .compare .big.bad{color:var(--bad)}
+  @media(max-width:680px){.compare{grid-template-columns:1fr}}
+  .footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--card-border);
+    color:var(--text-dim);font-size:.85rem;text-align:center}
+  .skill-route{background:rgba(124,77,255,.08);border:1px solid rgba(124,77,255,.25);
+    border-radius:12px;padding:18px 22px;margin:20px 0}
+  .skill-route b{color:#cbb8ff}
+</style>
+</head>
+<body><div class="wrap">
+<h1>历史观察器实验校注</h1>
+<p class="sub">早期内联主页 · 归档校注 2026-10-27 · 原报告自述日期 2026-08-26，缺少原始运行日志。</p>
+<div class="skill-route"><b>旧数值未核验：</b>以下数值仅为旧 HTML 中的记录，不是本次测试结果，也不能用作线上性能、设备表现或优化收益证明。原脚本存在计算与指标命名问题；原技能评分/拒选叙述无日志支撑，不保留为事实。</div>
+<h2>保留的历史数值</h2>
+<p>原文声称正常桌面 1440×900、三次本机采样，以及 CPU 4× 和人工网络节流。不能据此证明真正的弱设备体验或真实用户分布。</p>
+<div style="overflow-x:auto"><table><thead><tr><th>旧字段（当时命名）</th><th>正常记录</th><th>人工节流旧前/后</th><th>状态</th></tr></thead><tbody>
+<tr><td>LCP</td><td>1488 ms</td><td>2800 → 2304 ms</td><td>公式重复计时，未核验</td></tr>
+<tr><td>CLS</td><td>约 0</td><td>0.0376 → 0.0376</td><td>并非现代会话窗口算法</td></tr>
+<tr><td>INP</td><td>56 ms</td><td>88 → 64 ms</td><td>事件耗时最大值，非标准 INP</td></tr>
+<tr><td>TTFB / FCP</td><td>9 / 479 ms</td><td>旧表未给出</td><td>缺原始日志，未核验</td></tr>
+<tr><td>DCL / Load（旧合并字段）</td><td>旧表未给出</td><td>1523 → 1136 ms</td><td>缺原始日志，未核验</td></tr>
+</tbody></table></div>
+<h2>公开脚本的修正</h2>
+<div class="card"><p><b>LCP 候选时间：</b><code>startTime</code> 已包含绘制时间含义，原来的 <code>startTime + renderTime</code> 可能重复计时，现只取 <code>startTime</code>。</p>
+<p><b>布局偏移：</b>仍保留实验性非输入偏移累计，改名 <code>nonInputShiftSum</code>。未采用相隔不超过 1 秒、总长不超过 5 秒的最大会话窗口，所以不叫标准 CLS。</p>
+<p><b>交互：</b>记录超过观察阈值的事件耗时最大值 <code>maxObservedEventDurationMs</code>；缺少标准交互分组与完整页面生命周期，不能叫 INP。没有观测值为 null，不判定失败或零延迟。</p></div>
+<h2>如何重跑</h2><pre><code>npm ci
+npm run dev
+# 另一个终端
+npm run measure
+npm run recheck</code></pre>
+<p>需要本机 Chrome；可通过 BROWSER_CHANNEL 选择已安装的 Playwright 支持通道。三次同条件实验输出中位数和范围；不是 CrUX/RUM 的真实访问 p75。截图位于相对目录 artifacts，不写入个人绝对路径。</p>
+<p>脚本只能说明当前机器、浏览器和合成点击下的短时观察。没有第三方网站调用、真实用户采集、标准指标认证或生产安全结论。</p>
+<h2>定义依据</h2><p><a href="https://developer.mozilla.org/en-US/docs/Web/API/LargestContentfulPaint">MDN LCP 属性</a> · <a href="https://web.dev/articles/cls">CLS 会话窗口</a> · <a href="https://web.dev/articles/inp">INP 交互与生命周期</a></p>
+<p class="footer"><a href="./">返回主题演示</a> · 本页历史数值不构成绩效或简历证明。</p>
+</div></body></html>

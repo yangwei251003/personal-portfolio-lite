@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
+<title>杨炜晨 · 个人作品集</title>
+<meta name="description" content="杨炜晨的个人作品集 — 电气工程及其自动化专业，热爱 AIGC 与 AI 工具。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav" id="nav">
+  <a class="nav__logo" href="#top">杨炜晨<span>.</span></a>
+  <button class="nav__toggle" id="navToggle" aria-label="打开导航菜单" aria-controls="navLinks" aria-expanded="false">☰</button>
+  <ul class="nav__links" id="navLinks">
+    <li><a href="#about">关于我</a></li>
+    <li><a href="#projects">项目作品</a></li>
+    <li><a href="#contact">公开入口</a></li>
+  </ul>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero__bg"></div>
+  <div class="hero__inner reveal">
+    <div class="hero__avatar">
+      <img src="assets/avatar.png" alt="AI生成的示意头像，非本人实照" width="132" height="132">
+    </div>
+    <h1 class="hero__title">你好，我是 <span class="grad">杨炜晨</span></h1>
+    <p class="hero__subtitle">电气工程及其自动化 · AI 协作开发实践</p>
+    <p class="hero__desc">从专业学习到网页与工具实践，用可查看的源码、说明和运行结果记录成长。</p>
+    <p class="ai-note">头像与背景为 AI 生成的示意视觉，头像不是本人实照。</p>
+    <div class="hero__cta">
+      <a class="btn btn--primary" href="#projects">看我的项目</a>
+      <a class="btn btn--ghost" href="#contact">看公开主页</a>
+    </div>
+  </div>
+  <a class="hero__scroll" href="#about" aria-label="向下滚动">⌄</a>
+</header>
+
+<main>
+  <section class="section" id="about">
+    <h2 class="section__title reveal">关于我</h2>
+    <div class="about">
+      <div class="about__text reveal">
+        <p>我是<strong>杨炜晨</strong>，就读于<strong>广州科技职业技术大学 · 人工智能与大数据学院</strong>，专业为电气工程及其自动化。2024 年入学，预计 2028 年毕业。</p>
+        <p>我通过项目学习 AI 协作开发、交互表达与自动化，把过程整理成能够查看代码和运行说明的作品。具体功能与完成状态以各仓库当前文档为准。</p>
+        <div class="tags">
+          <span class="tag">AI 工具</span>
+          <span class="tag">AIGC</span>
+          <span class="tag">文档处理</span>
+          <span class="tag">自动化</span>
+          <span class="tag">提示词工程</span>
+          <span class="tag">知识库</span>
+        </div>
+      </div>
+      <div class="about__card reveal">
+        <h3>项目中的实践方向</h3>
+        <ul class="skills">
+          <li><span>📄</span> 网页内容组织与项目文档</li>
+          <li><span>🤖</span> AI 协作开发与工作流整理</li>
+          <li><span>🎨</span> 交互学习与可视化表达</li>
+          <li><span>⚙️</span> 工具脚本与重复流程自动化</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="projects">
+    <h2 class="section__title reveal">项目作品</h2>
+    <div class="projects">
+      <article class="card reveal">
+        <div class="card__cover" style="--c1:#FF6B9D;--c2:#FFA06B"></div>
+        <div class="card__body"><h3>算法奇境</h3><p>通过交互操作认识算法与相关概念。此处链接到已核验的项目仓库和第一版在线体验；后续版本状态以仓库为准。</p><div class="card__tags"><span>交互学习</span><span>网页</span></div><p class="project-links"><a href="https://github.com/yangwei251003/algorithm-wonderland-site">查看源码 ↗</a><a href="https://yangwei251003.github.io/algorithm-wonderland-site/">在线体验 ↗</a></p></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__cover" style="--c1:#A06BFF;--c2:#6BC5FF"></div>
+        <div class="card__body"><h3>纸上有数</h3><p>围绕剪纸结构与几何关系的互动实验工坊。访问仓库了解功能、素材边界与运行方法。</p><div class="card__tags"><span>几何</span><span>互动实验</span></div><p class="project-links"><a href="https://github.com/yangwei251003/zhishang-youshu">查看项目 ↗</a></p></div>
+      </article>
+      <article class="card reveal">
+        <div class="card__cover" style="--c1:#6BC5FF;--c2:#5DCAA5"></div>
+        <div class="card__body"><h3>职友 · BossHunter Next</h3><p>以本地职业资料与证据组织岗位定制简历的工具。当前为开发中的 Windows alpha，以发行说明和已知限制为准。</p><div class="card__tags"><span>本地工具</span><span>开发中</span></div><p class="project-links"><a href="https://github.com/yangwei251003/zhiyou">源码与说明 ↗</a></p></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <h2 class="section__title reveal">公开入口</h2>
+    <div class="contact reveal">
+      <p class="contact__lead">代码、项目说明与公开履历统一整理在 GitHub。此页面不提供私人联系方式。</p>
+      <a class="chip" href="https://github.com/yangwei251003">打开 GitHub 主页 ↗</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>© 2026 杨炜晨 · 用 AI 把生活变轻松</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

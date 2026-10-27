@@ -1,0 +1,14 @@
+{
+  "name": "personal-portfolio-early-inline",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "license": "MIT",
+  "engines": { "node": ">=24" },
+  "scripts": {
+    "dev": "node serve.mjs",
+    "measure": "node cwv-measure.mjs",
+    "recheck": "node cwv-recheck.mjs"
+  },
+  "devDependencies": { "playwright": "1.64.1" }
+}
